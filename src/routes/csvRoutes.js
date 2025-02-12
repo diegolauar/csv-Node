@@ -67,21 +67,6 @@ router.get('/task/:id', (req, res) => {
     res.json({ message: 'Dados carregados com sucesso!', data: result });
 });
 
-router.put('/task/:id', (req, res) => {
-    const filename  ='/dados.json';
-    const filePath = path.join(JSON_DIR, filename);
-
-    if (!fs.existsSync(filePath)) {
-        return res.status(404).json({ error: 'Arquivo JSON não encontrado!' });
-    }
-
-    const fileContent = fs.readFileSync(filePath, 'utf-8');
-    let jsonData = JSON.parse(fileContent);
-    const result = jsonData.filter((e)=> e.id == req.params.id)
-    console.log(result)
-
-    res.json({ message: 'Dados carregados com sucesso!', data: result });
-});
 
 
 
