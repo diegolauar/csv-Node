@@ -1,0 +1,19 @@
+{
+  "name": "challenger-node-stream",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parse": "^5.6.0",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}
