@@ -100,16 +100,44 @@ router.put('/task/:id', (req, res) => {
     });
 
     if (!taskAtualizada) {
-        return res.status(404).json({ error: 'Task não encontrado' });
+        return res.status(404).json({ error: 'Task não encontrada' });
     }
 
     fs.writeFile(filePath, JSON.stringify(task, null, 2), 'utf-8', (err) => {
         if (err) return res.status(500).json({ error: 'Erro ao salvar o arquivo' });
-        res.json({ message: 'Idade atualizada com sucesso!', data: taskAtualizada });
+        res.json({ message: 'Task atualizada com sucesso!', data: taskAtualizada });
     });
 
 });
 
+router.delete('/task/:id', (req, res) => {
+
+    const { id } = req.params;
+
+    const filename = '/dados.json';
+    const filePath = path.join(JSON_DIR, filename);
+
+    if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ error: 'Arquivo JSON não encontrado!' });
+    }
+
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    let tasks = JSON.parse(fileContent);
+    const usuarioExistente = tasks.find(user => user.id === id);
+
+    if (!usuarioExistente) {
+        return res.status(404).json({ error: 'Task não encontrada' });
+    }
+
+    // Remover o usuário do array
+    tasks = tasks.filter(user => user.id !== id);
+
+    fs.writeFile(filePath, JSON.stringify(tasks, null, 2), 'utf-8', (err) => {
+        if (err) return res.status(500).json({ error: 'Erro ao salvar o arquivo' });
+
+        res.json({ message: 'Task deletada com sucesso!' });
+    });
+});
 
 
 
